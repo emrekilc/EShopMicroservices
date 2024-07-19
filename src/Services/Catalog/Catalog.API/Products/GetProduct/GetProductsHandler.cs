@@ -1,5 +1,4 @@
 ﻿
-using Marten.Pagination;
 
 namespace Catalog.API.Products.GetProduct;
 
@@ -16,6 +15,7 @@ internal class GetProductsQueryHandler
 			.ToListAsync(cancellationToken);
 
 		return new GetProductsResult(products);
+		//async method to handle getinng products 
 	}
 }
 
