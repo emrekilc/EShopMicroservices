@@ -1,28 +1,27 @@
-﻿namespace Catalog.API.Products.GetProduct;
+﻿
+namespace Catalog.API.Products.GetProducts;
 
-//public record GetProductRequest();
-
-public record GetProductResponse(IEnumerable<Product>Products);
+public record GetProductsRequest(int? PageNumber = 1, int? PageSize = 10);
+public record GetProductsResponse(IEnumerable<Product> Products);
 
 public class GetProductsEndpoint : ICarterModule
 {
-	public async void AddRoutes(IEndpointRouteBuilder app)
-	{
-		app.MapGet("/products", async (ISender sender) =>
-		{
+    public void AddRoutes(IEndpointRouteBuilder app)
+    {
+        app.MapGet("/products", async ([AsParameters] GetProductsRequest request, ISender sender) =>
+        {
+            var query = request.Adapt<GetProductsQuery>();
 
-			var result = await sender.Send(new GetProductsQuery());
+            var result = await sender.Send(query);
 
-			var response = result.Adapt<GetProductResponse>();
+            var response = result.Adapt<GetProductsResponse>();
 
-			return Results.Ok(response);
-		})
-		.WithName("GetProducts")
-		.Produces<GetProductResponse>(StatusCodes.Status200OK)
-		.ProducesProblem(StatusCodes.Status400BadRequest)
-		.WithSummary("Get Product")
-		.WithDescription("Get Product");
-	}
-
+            return Results.Ok(response);
+        })
+        .WithName("GetProducts")
+        .Produces<GetProductsResponse>(StatusCodes.Status200OK)
+        .ProducesProblem(StatusCodes.Status400BadRequest)
+        .WithSummary("Get Products")
+        .WithDescription("Get Products");
+    }
 }
-

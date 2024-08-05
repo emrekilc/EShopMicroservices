@@ -1,21 +1,19 @@
 ﻿
-namespace Catalog.API.Products.GetProduct;
+namespace Catalog.API.Products.GetProductByCategory;
 
-public record GetProductsByCategoryQuery(string Category) : IQuery<GetProductsByCategoryResult>;
-public record GetProductsByCategoryResult(IEnumerable<Product> Products);
-internal class GetProductsByCategoryQueryHandler
-	(IDocumentSession session, ILogger<GetProductsByCategoryQueryHandler> logger)
-	: IQueryHandler<GetProductsByCategoryQuery, GetProductsByCategoryResult>
+public record GetProductByCategoryQuery(string Category) : IQuery<GetProductByCategoryResult>;
+public record GetProductByCategoryResult(IEnumerable<Product> Products);
+
+internal class GetProductByCategoryQueryHandler
+    (IDocumentSession session)
+    : IQueryHandler<GetProductByCategoryQuery, GetProductByCategoryResult>
 {
-	public async Task<GetProductsByCategoryResult> Handle(GetProductsByCategoryQuery query, CancellationToken cancellationToken)
-	{
-		logger.LogInformation("GetProductsByCategoryQueryHandler.Handle called with {@Query}", query);
-		var products = await session.Query<Product>()
-			.Where(p=>p.Category.Contains(query.Category))
-			.ToListAsync(cancellationToken);
+    public async Task<GetProductByCategoryResult> Handle(GetProductByCategoryQuery query, CancellationToken cancellationToken)
+    {
+        var products = await session.Query<Product>()
+            .Where(p => p.Category.Contains(query.Category))
+            .ToListAsync(cancellationToken);
 
-		return new GetProductsByCategoryResult(products);
-		//async method to handle getinng products 
-	}
+        return new GetProductByCategoryResult(products);
+    }
 }
-

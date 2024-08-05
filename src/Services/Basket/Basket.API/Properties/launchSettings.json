@@ -2,21 +2,19 @@
   "profiles": {
     "http": {
       "commandName": "Project",
-      "launchBrowser": false,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
       "dotnetRunMessages": true,
-      "applicationUrl": "http://localhost:5000"
+      "applicationUrl": "http://localhost:5001"
     },
     "https": {
       "commandName": "Project",
-      "launchBrowser": falseS,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
       "dotnetRunMessages": true,
-      "applicationUrl": "https://localhost:5050;http://localhost:5000"
+      "applicationUrl": "https://localhost:5051;http://localhost:5001"
     },
     "IIS Express": {
       "commandName": "IISExpress",
@@ -27,7 +25,6 @@
     },
     "Container (Dockerfile)": {
       "commandName": "Docker",
-      "launchBrowser": true,
       "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}",
       "environmentVariables": {
         "ASPNETCORE_HTTPS_PORTS": "8081",
@@ -42,8 +39,8 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:51109",
-      "sslPort": 44317
+      "applicationUrl": "http://localhost:20950",
+      "sslPort": 44333
     }
   }
 }

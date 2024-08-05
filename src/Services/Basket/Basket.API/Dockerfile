@@ -9,19 +9,18 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["Services/Catalog/Catalog.API/Catalog.API.csproj", "Services/Catalog/Catalog.API/"]
+COPY ["Services/Basket/Basket.API/Basket.API.csproj", "Services/Basket/Basket.API/"]
 COPY ["BuildingBlocks/BuildingBlocks/BuildingBlocks.csproj", "BuildingBlocks/BuildingBlocks/"]
-COPY ["docker-compose.dcproj", "."]
-RUN dotnet restore "./Services/Catalog/Catalog.API/Catalog.API.csproj"
+RUN dotnet restore "./Services/Basket/Basket.API/Basket.API.csproj"
 COPY . .
-WORKDIR "/src/Services/Catalog/Catalog.API"
-RUN dotnet build "./Catalog.API.csproj" -c $BUILD_CONFIGURATION -o /app/build
+WORKDIR "/src/Services/Basket/Basket.API"
+RUN dotnet build "./Basket.API.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./Catalog.API.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "./Basket.API.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "Catalog.API.dll"]
+ENTRYPOINT ["dotnet", "Basket.API.dll"]
