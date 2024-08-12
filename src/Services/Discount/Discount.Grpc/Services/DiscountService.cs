@@ -9,7 +9,7 @@ namespace Discount.Grpc.Services;
 public class DiscountService
     (DiscountContext dbContext, ILogger<DiscountService> logger)
     : DiscountProtoService.DiscountProtoServiceBase
-{
+{    
     public override async Task<CouponModel> GetDiscount(GetDiscountRequest request, ServerCallContext context)
     {
         var coupon = await dbContext
@@ -18,7 +18,7 @@ public class DiscountService
 
         if (coupon is null)
             coupon = new Coupon { ProductName = "No Discount", Amount = 0, Description = "No Discount Desc" };
-        //instead of throwing an exception we can simply inject a null coupon which do nothing.
+
         logger.LogInformation("Discount is retrieved for ProductName : {productName}, Amount : {amount}", coupon.ProductName, coupon.Amount);
 
         var couponModel = coupon.Adapt<CouponModel>();
