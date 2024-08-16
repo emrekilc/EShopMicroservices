@@ -10,3 +10,8 @@ global using Ordering.Domain.Events;
 global using Microsoft.EntityFrameworkCore;
 global using Microsoft.Extensions.Logging;
 global using Ordering.Application.Extensions;
+global using BuildingBlocks.Behaviors;
+global using BuildingBlocks.Behaviours;
+global using Microsoft.Extensions.Configuration;
+global using Microsoft.Extensions.DependencyInjection;
+global using System.Reflection;
