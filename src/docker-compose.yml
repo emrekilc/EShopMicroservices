@@ -2,7 +2,7 @@ version: '3.4'
 
 services:
   catalogdb:
-    image: postgres  
+    image: postgres
 
   basketdb:
     image: postgres
@@ -15,7 +15,6 @@ services:
 
   messagebroker:
     image: rabbitmq:management
-
 
   catalog.api:
     image: ${DOCKER_REGISTRY-}catalogapi
@@ -47,9 +46,17 @@ services:
       context: .
       dockerfile: ApiGateways/YarpApiGateway/Dockerfile
 
+  shopping.web:
+    image: ${DOCKER_REGISTRY-}shoppingweb
+    build:
+      context: .
+      dockerfile: WebApps/Shopping.Web/Dockerfile
+
 volumes:
-  postgres_catalog: 
+  postgres_catalog:
   postgres_basket:
+
+
 
 
 

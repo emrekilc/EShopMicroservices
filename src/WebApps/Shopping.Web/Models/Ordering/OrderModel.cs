@@ -28,3 +28,4 @@ public enum OrderStatus
 public record GetOrdersResponse(PaginatedResult<OrderModel> Orders);
 public record GetOrdersByNameResponse(IEnumerable<OrderModel> Orders);
 public record GetOrdersByCustomerResponse(IEnumerable<OrderModel> Orders);
+
