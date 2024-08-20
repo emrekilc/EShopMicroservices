@@ -6,7 +6,7 @@ using MediatR;
 
 namespace BuildingBlocks.Behaviours;
 
-public class ValidationBehaviour<TRequest, TResponse> 
+public class ValidationBehavior<TRequest, TResponse> 
 	(IEnumerable<IValidator<TRequest>>validators)
 	:IPipelineBehavior<TRequest, TResponse>
 	where TRequest:ICommand<TResponse>

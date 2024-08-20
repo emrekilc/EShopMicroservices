@@ -1,25 +1,25 @@
-using BuildingBlocks.Exceptions.Handler;
 using Discount.Grpc;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using BuildingBlocks.Messaging.MassTransit;
+using BuildingBlocks.Behaviours;
+using BuildingBlocks.Exceptions.Handler;
 
 var builder = WebApplication.CreateBuilder(args);
 
-//add Services to the container
+// Add services to the container.
 
 //Application Services
-
 var assembly = typeof(Program).Assembly;
 builder.Services.AddCarter();
 builder.Services.AddMediatR(config =>
 {
     config.RegisterServicesFromAssembly(assembly);
-    config.AddOpenBehavior(typeof(ValidationBehaviour<,>));
+    config.AddOpenBehavior(typeof(ValidationBehavior<,>));
     config.AddOpenBehavior(typeof(LoggingBehavior<,>));
 });
-//Data Services
 
+//Data Services
 builder.Services.AddMarten(opts =>
 {
     opts.Connection(builder.Configuration.GetConnectionString("Database")!);
@@ -27,7 +27,6 @@ builder.Services.AddMarten(opts =>
 }).UseLightweightSessions();
 
 builder.Services.AddScoped<IBasketRepository, BasketRepository>();
-
 builder.Services.Decorate<IBasketRepository, CachedBasketRepository>();
 
 builder.Services.AddStackExchangeRedisCache(options =>
@@ -53,22 +52,18 @@ builder.Services.AddGrpcClient<DiscountProtoService.DiscountProtoServiceClient>(
 });
 
 //Async Communication Services
-
 builder.Services.AddMessageBroker(builder.Configuration);
 
 //Cross-Cutting Services
-
 builder.Services.AddExceptionHandler<CustomExceptionHandler>();
 
 builder.Services.AddHealthChecks()
     .AddNpgSql(builder.Configuration.GetConnectionString("Database")!)
     .AddRedis(builder.Configuration.GetConnectionString("Redis")!);
 
-
 var app = builder.Build();
 
-
-//Configure the http request pipeline.
+// Configure the HTTP request pipeline.
 app.MapCarter();
 app.UseExceptionHandler(options => { });
 app.UseHealthChecks("/health",
