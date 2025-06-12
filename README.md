@@ -37,7 +37,6 @@ Bu proje şu servisleri içerir:
 
 ## 🗺️ Katmanlı Yapı
 
-\`\`\`bash
 EShopMicroservices/
 ├── src/
 │   ├── Services/
@@ -51,7 +50,6 @@ EShopMicroservices/
 │       └── OcelotGateway/
 ├── docker-compose.yml
 └── README.md
-\`\`\`
 
 ---
 
@@ -106,9 +104,6 @@ Her serviste ayrı Swagger arayüzü bulunmaktadır. Ayrıca, Swagger üzerinden
 
 ## 📸 Ekran Görüntüleri
 
-> Ekran görüntülerini `assets/` klasörüne koyabilir ve buraya markdown olarak ekleyebilirsin.
-
-\`\`\`md
 ![Catalog Swagger](assets/catalog-swagger.png)
 \`\`\`
 
